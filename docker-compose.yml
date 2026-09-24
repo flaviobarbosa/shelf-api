@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: shelf-api-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=shelf
+      - POSTGRES_PASSWORD=shelf
+      - POSTGRES_DB=shelf_api
+    ports:
+      - '5432:5432'
+    volumes:
+      - shelf-api-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U shelf -d shelf_api']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  shelf-api-data:
