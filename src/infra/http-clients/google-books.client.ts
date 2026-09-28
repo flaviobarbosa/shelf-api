@@ -1,19 +1,9 @@
-export interface GoogleBooksResponse {
-  title?: string;
-  authors?: string[];
-  pageCount?: number;
-  publishedDate?: string;
-  description?: string;
-  thumbnail?: string;
-}
-
 import 'dotenv/config';
+import { BookExternalData } from './types.js';
 
 const API_KEY = process.env.GOOGLE_BOOKS_API_KEY;
 
-export async function fetchFromGoogleBooks(isbn: string): Promise<GoogleBooksResponse | null> {
-  console.log(API_KEY);
-
+export async function fetchFromGoogleBooks(isbn: string): Promise<BookExternalData | null> {
   const response = await fetch(
     `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}&key=${API_KEY}`,
   );
@@ -40,6 +30,6 @@ export async function fetchFromGoogleBooks(isbn: string): Promise<GoogleBooksRes
     pageCount: volumeInfo?.pageCount,
     publishedDate: volumeInfo?.publishedDate,
     description: volumeInfo?.description,
-    thumbnail: volumeInfo?.imageLinks?.thumbnail,
+    coverUrl: volumeInfo?.imageLinks?.thumbnail,
   };
 }

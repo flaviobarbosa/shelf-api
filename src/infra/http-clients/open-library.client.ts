@@ -1,10 +1,12 @@
+import { BookExternalData } from './types.js';
+
 export interface OpenLibraryResponse {
   title?: string;
   number_of_pages?: number;
   covers?: number[];
 }
 
-export async function fetchFromOpenLibrary(isbn: string): Promise<OpenLibraryResponse | null> {
+export async function fetchFromOpenLibrary(isbn: string): Promise<BookExternalData | null> {
   const response = await fetch(`https://openlibrary.org/isbn/${isbn}.json`, {
     headers: {
       'User-Agent': 'shelf-api (seu-email@gmail.com)',
@@ -23,7 +25,7 @@ export async function fetchFromOpenLibrary(isbn: string): Promise<OpenLibraryRes
 
   return {
     title: json.title,
-    number_of_pages: json.number_of_pages,
-    covers: json.covers,
+    pageCount: json.number_of_pages,
+    coverUrl: json.covers,
   };
 }
