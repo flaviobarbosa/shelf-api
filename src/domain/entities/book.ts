@@ -1,6 +1,7 @@
-import { randomUUID, randomUUIDv7 } from 'node:crypto';
+import { randomUUID } from 'node:crypto';
 import { ReadingStatus } from './reading-status.js';
 import { InvalidBookStatusTransitionError } from '../errors/invalid-book-status-transition.error.js';
+import { InvalidBookDataError } from '../errors/invalid-book-data-error.js';
 
 export interface BookProps {
   id: string;
@@ -34,6 +35,10 @@ export class Book {
       'id' | 'status' | 'currentPage' | 'isLoaned' | 'createdAt' | 'updatedAt'
     >,
   ): Book {
+    if (props.pageCount !== undefined && props.pageCount <= 0) {
+      throw new InvalidBookDataError('Page count must be greater than zero');
+    }
+
     return new Book({
       ...props,
       id: randomUUID(),
