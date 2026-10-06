@@ -12,7 +12,8 @@
     "lint:fix": "eslint src --fix",
     "format": "prettier --write src",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "postinstall": "prisma skills sync || exit 0"
   },
   "keywords": [],
   "author": "",
@@ -21,15 +22,20 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@types/node": "^26.6.2",
+    "@types/pg": "^8.23.1",
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.9.9",
+    "prisma": "^7.10.0",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.70.1",
     "vitest": "^5.0.3"
   },
   "dependencies": {
-    "dotenv": "^18.0.3"
+    "@prisma/adapter-pg": "^7.10.0",
+    "@prisma/client": "^7.10.0",
+    "dotenv": "^18.0.3",
+    "pg": "^8.23.1"
   }
 }
